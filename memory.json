@@ -1,0 +1,10 @@
+{
+  "user_profile": {
+    "dietary_restrictions": [],
+    "allergies": [],
+    "budget_limit": 75.0,
+    "currency": "NZD",
+    "country": "New Zealand",
+    "days": 7
+  }
+}
