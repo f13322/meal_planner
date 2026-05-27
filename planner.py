@@ -49,34 +49,40 @@ class MealPlanner:
         {json.dumps(list(local_recipes.keys()))}
 
         INSTRUCTIONS:
-        INTENT CLASSIFICATION:
+        1. INTENT CLASSIFICATION:
            - If the user asks to "start over", "generate a new plan", "reset", or if there is no "Current Active Plan", discard the old plan and generate a completely new plan.
            - If the user provides additional/new constraints in their message (e.g., "start over but make it keto instead"), merge those conversational constraints into the System Constraints.
            - If the user is asking to modify, replace, swap, or tweak the "Current Active Plan" (e.g., "change Wednesday's dinner"), preserve all other unchanged meals exactly as they are and only modify the requested parts.
 
+        2. FEASIBILITY EVALUATION:
+           - Assess whether the requested plan is realistic under the budget, duration, and country.
+           - If the budget is unrealistic, set "is_feasible" to false, explain why in "feasibility_explanation", and suggest a realistic adjustment. Generate a "best-effort" plan anyway.
+
         Output MUST be valid JSON matching this exact structure:
         {{
-          "meals": {{
+            "is_feasible": true,
+            "feasibility_explanation": "",
+            "meals": {{
             "Day 1": {{
               "Breakfast": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}},
               "Lunch": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}},
               "Dinner": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}}
             }}
-          }},
-          "estimated_total_cost": 45.0,
-          "grocery_list": [
-             {{"item": "item name", "estimated_price": 3.50}}
-          ]
+            }},
+            "estimated_total_cost": 45.0,
+            "grocery_list": [
+            {{"item": "item name", "estimated_price": 3.50}}
+            ]
         }}
         Do not include any extra text or markdown formatting outside of raw JSON.
         """
         response = self.client.models.generate_content(
-                model=self.model_id,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
+                    model=self.model_id,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json"
+                    )
                 )
-            )
         return json.loads(response.text)
 
     def fetch_recipe_details(self, meal_name: str) -> dict:

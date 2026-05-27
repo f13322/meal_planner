@@ -41,6 +41,22 @@ class MealAgent:
         if "error" in new_plan:
             return f"Sorry, I couldn't process that: {new_plan['error']}", {}
 
+        # Feasibility Assessment Check
+        if not new_plan.get("is_feasible", True):
+            explanation = new_plan.get(
+                "feasibility_explanation", 
+                "The constraints provided make it very difficult to generate a realistic plan."
+            )
+            self._cache_new_recipes(new_plan)
+            response_text = (
+                f"⚠️ **Constraints Unfeasible**\n\n"
+                f"{explanation}\n\n"
+                f"I have generated a realistic, **best-effort fallback plan** with adjusted parameters."
+            )
+            # Append success response to memory and save
+            chat_history.append({"role": "assistant", "content": response_text})
+            return response_text, new_plan
+        
         # Programmatic Validation Check
         is_valid, violations = self.validator.validate(new_plan, constraints)
 
