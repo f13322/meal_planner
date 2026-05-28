@@ -25,16 +25,17 @@ class PlanValidator:
         """
         if not os.path.exists(RULES_FILE):
             # Write a default rules file if none exists
-            with open(RULES_FILE, "w") as f:
-                json.dump(fallback, f, indent=2)
-            return fallback
-
+            try:
+                with open(RULES_FILE, "w") as f:
+                    json.dump(fallback, f, indent=2)
+                return fallback
+            except Exception:
+                return fallback
         try:
             with open(RULES_FILE, "r") as f:
                 return json.load(f)
         except Exception:
             return fallback
-
 
     def validate(self, plan_data: dict, constraints: dict) -> tuple[bool, list[str]]:
         """
@@ -45,7 +46,7 @@ class PlanValidator:
         # Budget Verification
         budget_limit = constraints.get("budget_limit")
         estimated_cost = plan_data.get("estimated_total_cost", 0)
-        currency = constraints.get("currency", "NZD")
+        currency = constraints.get("currency", "$")
         
         if budget_limit and estimated_cost > budget_limit:
             violations.append(

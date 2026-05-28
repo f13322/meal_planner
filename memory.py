@@ -1,6 +1,9 @@
 import json
 import os
 
+RECIPES_FILE = "recipes.json"
+MEMORY_FILE = "memory.json"
+
 def load_json(filepath, default_value):
     """
     Loads JSON data from a file, returns default_value if file doesn't exist or is invalid.
@@ -21,9 +24,9 @@ def save_json(filepath, data):
 
 class MemoryManager:
     def __init__(self):
-        self.recipes = load_json("recipes.json", {})
+        self.recipes = load_json(RECIPES_FILE, {})
         self.memory = load_json(
-            "memory.json", 
+            MEMORY_FILE, 
             {
                 "user_profile": {
                     "dietary_restrictions": [], 
@@ -41,11 +44,11 @@ class MemoryManager:
 
     def save_recipe(self, name, recipe_data):
         self.recipes[name.lower()] = recipe_data
-        save_json("recipes.json", self.recipes)
+        save_json(RECIPES_FILE, self.recipes)
 
     def get_profile(self):
         return self.memory.get("user_profile", {})
 
     def save_profile(self, profile):
         self.memory["user_profile"] = profile
-        save_json("memory.json", self.memory)
+        save_json(MEMORY_FILE, self.memory)

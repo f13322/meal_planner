@@ -2,6 +2,8 @@ from memory import MemoryManager
 from planner import MealPlanner
 from validator import PlanValidator
 
+REVALIDATION_RETRY_LIMIT = 5  # Maximum number of self-correction attempts if validation fails
+
 class MealAgent:
     def __init__(self):
         self.memory = MemoryManager()
@@ -30,7 +32,7 @@ class MealAgent:
         current_plan = constraints.get("current_plan")
 
         # Invoke the unified, context-aware generator/modifier
-        new_plan = self.planner.generate_plan(
+        new_plan = self.planner.generate_or_modify_plan(
             user_message=user_message,
             chat_history=chat_history,
             constraints=constraints,
@@ -56,19 +58,19 @@ class MealAgent:
             # Append success response to memory and save
             chat_history.append({"role": "assistant", "content": response_text})
             return response_text, new_plan
-        
+
         # Programmatic Validation Check
         is_valid, violations = self.validator.validate(new_plan, constraints)
         attempts = 0
 
         # Self-correction pass if violations occur
-        while not is_valid and attempts < 5:
+        while not is_valid and attempts < REVALIDATION_RETRY_LIMIT:
             attempts += 1
             correction_prompt = (
                 f"The plan violated standard rules: {', '.join(violations)}. "
                 f"Please adjust only the problematic items to respect these restrictions."
             )
-            new_plan = self.planner.generate_plan(
+            new_plan = self.planner.generate_or_modify_plan(
                 user_message=correction_prompt,
                 chat_history=chat_history,
                 constraints=constraints,

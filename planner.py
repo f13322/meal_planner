@@ -4,15 +4,23 @@ from google import genai
 from google.genai import types
 import time
 
+GENERATION_RETRY_LIMIT = 5
+
 class MealPlanner:
     def __init__(self):
         # google-genai automatically uses the GEMINI_API_KEY environment variable.
         # We perform an explicit check here to provide a clear error message if it's missing.
         api_key = os.getenv("GEMINI_API_KEY")
+        model_id = os.getenv("AGENT_MODEL")
+
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY environment variable not set.")
+        if not model_id:
+            raise ValueError("AGENT_MODEL environment variable not set.")
         
         # Initialize the modern unified GenAI Client
         self.client = genai.Client(api_key=api_key)
-        self.model_id = "gemini-2.5-flash"
+        self.model_id = model_id
 
     def _generate_with_retry(self, prompt: str, max_retries: int = 6) -> str:
         """
@@ -35,7 +43,7 @@ class MealPlanner:
                 last_error = e
         raise last_error
 
-    def generate_plan(
+    def generate_or_modify_plan(
         self, 
         user_message: str, 
         chat_history: list, 
@@ -81,24 +89,24 @@ class MealPlanner:
 
         Output MUST be valid JSON matching this exact structure:
         {{
-            "is_feasible": true,
-            "feasibility_explanation": "",
-            "meals": {{
+          "is_feasible": true,
+          "feasibility_explanation": "",
+          "meals": {{
             "Day 1": {{
               "Breakfast": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}},
               "Lunch": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}},
               "Dinner": {{"name": "Meal Name", "ingredients": ["ing 1", "ing 2"]}}
             }}
-            }},
-            "estimated_total_cost": 45.0,
-            "grocery_list": [
-            {{"item": "item name", "estimated_price": 3.50}}
-            ]
+          }},
+          "estimated_total_cost": 45.0,
+          "grocery_list": [
+             {{"item": "item name", "estimated_price": 3.50}}
+          ]
         }}
         Do not include any extra text or markdown formatting outside of raw JSON.
         """
         try:
-            raw_response = self._generate_with_retry(prompt, 5)
+            raw_response = self._generate_with_retry(prompt, GENERATION_RETRY_LIMIT)
             return json.loads(raw_response)
         except Exception as e:
             return {
@@ -125,7 +133,8 @@ class MealPlanner:
         }}
         Return raw JSON only.
         """
-        for i in range(5):
+        
+        for i in range(GENERATION_RETRY_LIMIT):
             try:
                 response = self.client.models.generate_content(
                     model=self.model_id,
@@ -139,7 +148,6 @@ class MealPlanner:
                 time.sleep(2**i)  # Exponential backoff
                 continue
             break
-        
         try:
             return json.loads(response.text)
         except:
