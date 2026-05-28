@@ -9,10 +9,11 @@ def load_json(filepath, default_value):
         with open(filepath, "w") as f:
             json.dump(default_value, f, indent=2)
         return default_value
-    
-    with open(filepath, "r") as f:
-        return json.load(f)
-
+    try:
+        with open(filepath, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return default_value
 
 def save_json(filepath, data):
     with open(filepath, "w") as f:

@@ -29,8 +29,12 @@ class PlanValidator:
                 json.dump(fallback, f, indent=2)
             return fallback
 
-        with open(RULES_FILE, "r") as f:
-            return json.load(f)
+        try:
+            with open(RULES_FILE, "r") as f:
+                return json.load(f)
+        except Exception:
+            return fallback
+
 
     def validate(self, plan_data: dict, constraints: dict) -> tuple[bool, list[str]]:
         """

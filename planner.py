@@ -14,6 +14,27 @@ class MealPlanner:
         self.client = genai.Client(api_key=api_key)
         self.model_id = "gemini-2.5-flash"
 
+    def _generate_with_retry(self, prompt: str, max_retries: int = 6) -> str:
+        """
+        Executes generation, retries if it fails, and raises an error after max retries.
+        """
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_id,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json"
+                    )
+                )
+                return response.text
+            except Exception as e:
+                print(f"Generation attempt {attempt + 1} failed: {str(e)}")
+                time.sleep(2**attempt)  # Brief pause before retrying to avoid API rate limits or transient issues
+                last_error = e
+        raise last_error
+
     def generate_plan(
         self, 
         user_message: str, 
@@ -76,22 +97,11 @@ class MealPlanner:
         }}
         Do not include any extra text or markdown formatting outside of raw JSON.
         """
-        e = ''
-        for attempt in range(5):
-            try:
-                response = self.client.models.generate_content(
-                    model=self.model_id,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json"
-                    )
-                )
-                return json.loads(response.text)
-            except Exception as e:
-                print(f"Generation attempt {attempt + 1} failed: {str(e)}")
-                time.sleep(2**attempt)  # Brief pause before retrying to avoid API rate limits or transient issues
-            break
-        return {
+        try:
+            raw_response = self._generate_with_retry(prompt, 5)
+            return json.loads(raw_response)
+        except Exception as e:
+            return {
                 "is_feasible": True,
                 "feasibility_explanation": "",
                 "meals": {},
@@ -115,12 +125,27 @@ class MealPlanner:
         }}
         Return raw JSON only.
         """
-        
-        response = self.client.models.generate_content(
+        for i in range(5):
+            try:
+                response = self.client.models.generate_content(
                     model=self.model_id,
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json"
                     )
                 )
-        return json.loads(response.text)
+            except Exception as e:
+                print(f"Generation attempt {i + 1} failed: {str(e)}")
+                time.sleep(2**i)  # Exponential backoff
+                continue
+            break
+        
+        try:
+            return json.loads(response.text)
+        except:
+            return {
+                "name": meal_name,
+                "ingredients": [],
+                "instructions": ["Recipe instructions could not be generated."],
+                "dietary_tags": []
+            }
