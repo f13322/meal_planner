@@ -59,9 +59,11 @@ class MealAgent:
         
         # Programmatic Validation Check
         is_valid, violations = self.validator.validate(new_plan, constraints)
+        attempts = 0
 
         # Self-correction pass if violations occur
-        while not is_valid:
+        while not is_valid and attempts < 5:
+            attempts += 1
             correction_prompt = (
                 f"The plan violated standard rules: {', '.join(violations)}. "
                 f"Please adjust only the problematic items to respect these restrictions."

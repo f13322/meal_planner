@@ -76,14 +76,28 @@ class MealPlanner:
         }}
         Do not include any extra text or markdown formatting outside of raw JSON.
         """
-        response = self.client.models.generate_content(
+        e = ''
+        for attempt in range(5):
+            try:
+                response = self.client.models.generate_content(
                     model=self.model_id,
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json"
                     )
                 )
-        return json.loads(response.text)
+                return json.loads(response.text)
+            except Exception as e:
+                print(f"Generation attempt {attempt + 1} failed: {str(e)}")
+                time.sleep(2**attempt)  # Brief pause before retrying to avoid API rate limits or transient issues
+        return {
+                "is_feasible": True,
+                "feasibility_explanation": "",
+                "meals": {},
+                "estimated_total_cost": 0.0,
+                "grocery_list": [],
+                "error": f"Planning processing failed: {str(e)}"
+            }
 
     def fetch_recipe_details(self, meal_name: str) -> dict:
         """
