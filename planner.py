@@ -90,6 +90,7 @@ class MealPlanner:
             except Exception as e:
                 print(f"Generation attempt {attempt + 1} failed: {str(e)}")
                 time.sleep(2**attempt)  # Brief pause before retrying to avoid API rate limits or transient issues
+            break
         return {
                 "is_feasible": True,
                 "feasibility_explanation": "",
