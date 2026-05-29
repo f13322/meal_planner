@@ -1,1 +1,120 @@
-{}
+{
+  "chicken stir-fry with rice": {
+    "name": "Chicken Stir-fry with Rice",
+    "ingredients": [
+      "1 lb boneless, skinless chicken breast or thighs, cut into 1-inch pieces",
+      "2 tbsp soy sauce (or tamari for gluten-free), divided",
+      "1 tbsp rice vinegar, divided",
+      "1 tsp sesame oil, divided",
+      "2 tsp cornstarch, divided",
+      "1 tbsp vegetable oil (or other high-heat cooking oil)",
+      "1 medium onion, thinly sliced",
+      "2 cloves garlic, minced",
+      "1 tbsp fresh ginger, grated",
+      "1 head broccoli, cut into small florets",
+      "1 red bell pepper, sliced",
+      "1 cup snap peas or snow peas",
+      "2 carrots, peeled and thinly sliced or julienned",
+      "1/4 cup chicken broth (or water)",
+      "1 tbsp brown sugar or honey",
+      "Cooked jasmine or long-grain rice, for serving (approx. 3 cups cooked)"
+    ],
+    "instructions": [
+      "**Prepare Chicken:** In a medium bowl, combine the chicken pieces with 1 tbsp soy sauce, 1 tsp rice vinegar, 1/2 tsp sesame oil, and 1 tsp cornstarch. Toss to coat and set aside to marinate for at least 10 minutes (or up to 30 minutes).",
+      "**Prepare Stir-fry Sauce:** In a small bowl, whisk together the remaining 1 tbsp soy sauce, 1 tbsp rice vinegar, 1/2 tsp sesame oil, 1 tsp cornstarch, chicken broth, and brown sugar/honey. Set aside.",
+      "**Cook Rice:** Prepare rice according to package directions. Keep warm.",
+      "**Stir-fry Chicken:** Heat 1 tbsp vegetable oil in a large skillet or wok over medium-high heat. Add the marinated chicken and stir-fry for 3-5 minutes, until cooked through and lightly browned. Remove chicken from the pan and set aside.",
+      "**Stir-fry Vegetables:** If needed, add a little more oil to the pan. Add sliced onion, minced garlic, and grated ginger. Stir-fry for 1 minute until fragrant.",
+      "Add broccoli florets and carrots to the pan. Stir-fry for 3-4 minutes until they start to become tender-crisp.",
+      "Add red bell pepper and snap peas. Continue to stir-fry for another 2-3 minutes.",
+      "**Combine and Sauce:** Return the cooked chicken to the pan with the vegetables. Give the prepared stir-fry sauce a quick whisk (cornstarch settles at the bottom) and pour it evenly over the chicken and vegetables.",
+      "Stir continuously for 1-2 minutes as the sauce thickens and coats all the ingredients.",
+      "**Serve:** Remove from heat and serve immediately over hot cooked rice."
+    ],
+    "dietary_tags": [
+      "High-Protein",
+      "Dairy-Free",
+      "Asian-Inspired",
+      "Weeknight Meal"
+    ]
+  },
+  "oatmeal with berries": {
+    "name": "Oatmeal with Berries",
+    "ingredients": [
+      "1/2 cup rolled oats",
+      "1 cup water or milk (dairy or non-dairy)",
+      "1/4 teaspoon salt (optional)",
+      "1/2 cup fresh or frozen berries (strawberries, blueberries, raspberries, etc.)",
+      "1 tablespoon sweetener (honey, maple syrup, sugar, or artificial sweetener, optional)",
+      "1 tablespoon nuts or seeds (optional, for topping)",
+      "Pinch of cinnamon (optional, for flavor)"
+    ],
+    "instructions": [
+      "Combine oats, water or milk, and salt (if using) in a saucepan.",
+      "Bring to a boil over medium-high heat, then reduce heat to low and simmer, stirring occasionally, for 5-7 minutes, or until oats are tender and the liquid is mostly absorbed.",
+      "If using frozen berries, you can add them during the last 2-3 minutes of cooking to warm them through. If using fresh berries, you can stir them in after cooking or use them as a topping.",
+      "Remove from heat and let stand for a minute or two.",
+      "Pour oatmeal into a bowl.",
+      "Top with berries, sweetener (if desired), nuts or seeds (if using), and a pinch of cinnamon (if desired).",
+      "Serve immediately."
+    ],
+    "dietary_tags": ["vegetarian", "vegan"]
+  },
+  "tuna salad sandwich": {
+    "name": "Tuna Salad Sandwich",
+    "ingredients": [
+      "2 cans (5 ounces each) tuna, drained",
+      "1/2 cup mayonnaise",
+      "1/4 cup finely chopped celery",
+      "2 tablespoons finely chopped onion",
+      "1 tablespoon sweet pickle relish (optional)",
+      "1 tablespoon lemon juice (optional)",
+      "Salt and freshly ground black pepper to taste",
+      "4 slices bread",
+      "Lettuce leaves (optional)"
+    ],
+    "instructions": [
+      "In a medium bowl, flake the drained tuna with a fork.",
+      "Add mayonnaise, chopped celery, chopped onion, and sweet pickle relish (if using).",
+      "Stir in lemon juice (if using).",
+      "Season with salt and pepper to taste.",
+      "Mix well until all ingredients are combined.",
+      "Spread the tuna salad mixture evenly on two slices of bread.",
+      "Top with lettuce leaves, if desired.",
+      "Cover with the remaining two slices of bread.",
+      "Cut sandwiches in half, if desired, and serve."
+    ],
+    "dietary_tags": ["pescatarian", "dairy-free (if using dairy-free mayo)"]
+  },
+  "pasta with tomato sauce and meatballs": {
+    "name": "Pasta with Tomato Sauce and Meatballs",
+    "ingredients": [
+      "1 pound ground beef",
+      "1/2 cup breadcrumbs",
+      "1/4 cup grated Parmesan cheese",
+      "1 large egg, beaten",
+      "2 cloves garlic, minced",
+      "1/4 cup chopped fresh parsley",
+      "1 teaspoon salt",
+      "1/2 teaspoon black pepper",
+      "2 tablespoons olive oil",
+      "1 large onion, chopped",
+      "2 (28 ounce) cans crushed tomatoes",
+      "1 teaspoon dried basil",
+      "1/2 teaspoon dried oregano",
+      "1/4 teaspoon red pepper flakes (optional)",
+      "1 pound pasta (spaghetti, linguine, or penne)",
+      "Grated Parmesan cheese, for serving"
+    ],
+    "instructions": [
+      "In a large bowl, combine ground beef, breadcrumbs, Parmesan cheese, beaten egg, minced garlic, chopped parsley, salt, and pepper. Mix well and form into 1-inch meatballs.",
+      "Heat olive oil in a large pot or Dutch oven over medium heat. Add meatballs and brown on all sides. Remove meatballs and set aside.",
+      "Add chopped onion to the pot and cook until softened, about 5-7 minutes.",
+      "Stir in crushed tomatoes, dried basil, dried oregano, and red pepper flakes (if using). Bring to a simmer.",
+      "Return meatballs to the pot. Cover and simmer for at least 30 minutes, or until meatballs are cooked through and sauce has thickened.",
+      "While the sauce is simmering, cook pasta according to package directions. Drain.",
+      "Serve meatballs and sauce over cooked pasta. Garnish with grated Parmesan cheese."
+    ],
+    "dietary_tags": ["contains-meat", "contains-dairy", "contains-gluten"]
+  }
+}
