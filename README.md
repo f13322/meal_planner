@@ -1,6 +1,8 @@
 # Meal Planning Agent Prototype
 
-This is a prototype of an intelligent, personal task-planning software agent built using Python, Streamlit, and the modern `google-genai` SDK. It processes conversational inputs to generate, modify, and export custom meal plans while validating budget, allergy, and dietary constraints locally.
+This is a prototype of an intelligent, personal task-planning software agent built using Python, Streamlit, and the modern `google-genai` SDK. It processes conversational inputs to generate, modify, and export custom meal plans while validating budget, allergy, and dietary constraints locally. Since this is a prototype, data such as user preference, and recipes will be stored in a local json file instead of a database. Due to thsi, the first few runs will take a lot longer due to the need to populate the recipe catalogue, but should improve for prolonged use.
+
+https://github.com/user-attachments/assets/f7810658-cbb8-4f72-95ff-1c139f8955e6
 
 ## Directory Structure
 
@@ -60,3 +62,7 @@ Creating a virtual environment ensures dependencies do not conflict with other s
 Start the Streamlit web servery by running the following command
 
     streamlit run app.py
+
+## Evaluation and Limitations
+
+The aget is capable of producing realistic meal plans that stays within the constraints, it can identify when the conditions such as the budget is too restrictive to provide reasoning and example plans with feasible constraints. Currently, the agent is quite slow due to multiple reasons. The agent does not run asynchronously, where
