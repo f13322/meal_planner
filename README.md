@@ -2,7 +2,7 @@
 
 This is a prototype of an intelligent, personal task-planning software agent built using Python, Streamlit, and the modern `google-genai` SDK. It processes conversational inputs to generate, modify, and export custom meal plans while validating budget, allergy, and dietary constraints locally. Since this is a prototype, data such as user preference, and recipes will be stored in a local json file instead of a database. Due to thsi, the first few runs will take a lot longer due to the need to populate the recipe catalogue, but should improve for prolonged use.
 
-https://github.com/user-attachments/assets/f7810658-cbb8-4f72-95ff-1c139f8955e6
+https://github.com/user-attachments/assets/7cd4d3fe-a0ce-46e7-aa8e-2065f600222a
 
 ## Directory Structure
 
@@ -21,7 +21,7 @@ meal-planner/
 ├── rules.json          # Programmatic rules for vegetarian, vegan, and gluten-free filters
 ├── helpers.py          # Helper functions for formatting exported files
 ├── requirements.txt    # Python dependencies
-├── README.md		# Set up insteructions
+├── README.md		    # Set up insteructions
 └── .env                # API Keys (Not commited to the repository)
 ```
 
@@ -65,4 +65,8 @@ Start the Streamlit web servery by running the following command
 
 ## Evaluation and Limitations
 
-The aget is capable of producing realistic meal plans that stays within the constraints, it can identify when the conditions such as the budget is too restrictive to provide reasoning and example plans with feasible constraints. Currently, the agent is quite slow due to multiple reasons. The agent does not run asynchronously, where
+The aget is capable of producing realistic meal plans that stays within the constraints and updating the plan based on provided feedbacks. Based on some manual checking, the price estimate of individual items seems reasonably accurate. The agent can also identify when conditions such as the budget is too restrictive and provide an example plans with feasible constraints. 
+
+Currently, the biggest limitation of the agent is its recipies catalogue. The recipies are currently generated and updated by the agent when required, the means that the recipes could be a result of hallucination, and it contributes heavily to the long wait for each prompt. 
+
+The hallucination issue could be helped by hooking the agent up to an external recipe database, this would also help with the runtime as the agent no longer need to update the catalogue. Another potential improvement would be running the update asynchronously, so the agent can reply to the user while the catalogue is being updated.
